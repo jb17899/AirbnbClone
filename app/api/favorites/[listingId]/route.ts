@@ -3,19 +3,19 @@ import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
 interface IParamsl {
-  listingId: string;
+  listingId?: string;
 }
 
 export async function POST(
   request: Request,
-  { params }: { params: IParamsl }
+  { params }: { params: Promise<IParamsl> }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = params;
+  const { listingId } = await params;
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
   }
