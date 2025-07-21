@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-interface Iparams {
+interface IParams {
   listingId?: string;
 }
 
 export async function POST(
   request: Request,
-  { params }: { params: Iparams }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
@@ -17,23 +17,22 @@ export async function POST(
 
   const { listingId } = params;
   if (!listingId || typeof listingId !== "string") {
-    throw new Error("No Listing Id");
+    return new NextResponse("Invalid ID", { status: 400 });
   }
 
-  let favoriteIds = [...(user.favoriteIds || [])];
-  favoriteIds.push(listingId);
+  const favoriteIds = [...(user.favoriteIds || []), listingId];
 
   const response = await prisma.user.update({
     where: { id: user.id },
     data: { favoriteIds },
   });
 
-  return NextResponse.json(response, { status: 200 });
+  return NextResponse.json(response);
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Iparams }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
@@ -42,7 +41,7 @@ export async function DELETE(
 
   const { listingId } = params;
   if (!listingId || typeof listingId !== "string") {
-    throw new Error("No Listing Id");
+    return new NextResponse("Invalid ID", { status: 400 });
   }
 
   let favoriteIds = [...(user.favoriteIds || [])];
@@ -53,5 +52,5 @@ export async function DELETE(
     data: { favoriteIds },
   });
 
-  return NextResponse.json(response, { status: 200 });
+  return NextResponse.json(response);
 }
