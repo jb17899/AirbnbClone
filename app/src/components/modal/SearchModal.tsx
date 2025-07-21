@@ -1,0 +1,109 @@
+'use client'
+import { useRouter, useSearchParams } from "next/navigation";
+import useSearchModal from "../hooks/useSearchModal"
+import Modal from "./Modal";
+import { useCallback, useMemo, useState } from "react";
+import { Range } from "react-date-range";
+import dynamic from "next/dynamic";
+import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
+import qs from 'query-string';
+import Heading from "../Heading";
+enum STEPS {
+    LOCATION = 0,
+    DATE = 1,
+    INFO = 2,
+};
+
+const SearchModal = () => {
+    const searchModal = useSearchModal();
+    const router = useRouter();
+    const params = useSearchParams();
+
+    const [location, setLocation] = useState<CountrySelectValue>();
+    const [step, setSteps] = useState(1);
+    const [guestCount, setGuestCount] = useState(1);
+    const [roomCount, setRoom] = useState(1);
+    const [bathroomCount, setBathroom] = useState(1);
+    const [dateRange, setDate] = useState<Range>({
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+    });
+    const Map = useMemo(() => dynamic(() => import('../Map'), { ssr: false }), [location]);
+    const onBack = () => {
+        setSteps((value) => value - 1);
+    }
+    const onNext = () => {
+        setSteps((value) => value + 1);
+    }
+    const onSubmit = useCallback(async () => {
+        if (step != STEPS.INFO) {
+            return onNext();
+        }
+        let currentQuery = {};
+        if (params) {
+            currentQuery = qs.parse(params.toString());
+        }
+        const updatedQuery = {
+            ...currentQuery,
+            locationValue: location?.value,
+            guestCount,
+            roomCount,
+            bathroomCount
+        };
+        const url = qs.stringifyUrl({ url: '/', query: updatedQuery }, { skipNull: true });
+        setSteps(STEPS.LOCATION);
+        searchModal.onClose();
+        router.push(url);
+    }, [
+        step,
+        searchModal,
+        location,
+        router,
+        guestCount,
+        roomCount,
+        bathroomCount,
+        dateRange,
+        onNext,
+        params
+    ]);
+    const actionLabel = useMemo(() => {
+        if (step === STEPS.INFO) {
+            return 'Create';
+        }
+        return 'Next';
+    }, [step]);
+    const secondaryActionLabel = useMemo(() => {
+        if (step === STEPS.DATE) {
+            return undefined;
+        }
+        return 'Back';
+    }, [step]);
+
+    let BodyContent = (
+        <div className="flex flex-col gap-8">
+            <Heading title="Where Do you wanna GO?"
+                subtitle="Find the Perfect Location" />
+            <CountrySelect value={location} onChange={(value) => { setLocation(value as CountrySelectValue); }} />
+
+
+        </div>
+    )
+
+
+
+
+
+    return (
+        <Modal isOpen={searchModal.isOpen}
+            onClose={searchModal.onClose}
+            onSubmit={searchModal.onOpen}
+            secondaryLabel={secondaryActionLabel}
+            title="Filters"
+            actionLabel="Search" 
+            body={BodyContent}
+            />
+    );
+}
+
+export default SearchModal
