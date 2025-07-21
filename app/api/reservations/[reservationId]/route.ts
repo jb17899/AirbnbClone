@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 interface Iparams{
     reservationId?:string
 };
-export async function DELETE(request:Request,{params}:{params:Iparams}){
+export async function DELETE(request:Request,{params}:{params:Promise<Iparams>}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
