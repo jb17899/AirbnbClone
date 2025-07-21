@@ -2,9 +2,48 @@
 
 import { BiSearch } from "react-icons/bi"
 import useSearchModal from "../hooks/useSearchModal"
+import { useSearchParams } from "next/navigation";
+import useCountries from "../hooks/useCountries";
+import { useMemo } from "react";
+import { difference } from "next/dist/build/utils";
+import { differenceInCalendarDays } from "date-fns";
 
 const Search = () => {
     const searchModal = useSearchModal();
+    const paras = useSearchParams();
+    const {ByValue} = useCountries();
+
+    const locationValue = paras?.get('locationValue');
+    const startDate = paras?.get('startDate');
+    const endDate = paras?.get('endDate');
+    const guestCount = paras?.get('guestCount');
+
+    const locationLabel = useMemo(() =>{
+        if(locationValue) {
+            return ByValue(locationValue)?.label;
+        }
+        return 'Anywhere';},[locationValue, ByValue]);
+        
+const durationLabel = useMemo(() => {
+    if(startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let diff = differenceInCalendarDays(end, start);
+        if(diff === 0) {
+            diff = 1;
+        }
+        return `${diff} Day${diff > 1 ? 's' : ''}`;
+    }
+    return 'Any Week';
+}, [startDate, endDate]);
+const guestLabel = useMemo(() => {
+    if(guestCount) {
+        return `${guestCount} Guest${Number(guestCount) > 1 ? 's' : ''
+        }`;
+    }
+    return 'Add Guests';
+}, [guestCount]);
+
   return (
     <div 
     onClick={searchModal.onOpen}
@@ -29,7 +68,7 @@ const Search = () => {
             font-semibold
             px-6
             ">
-                Anywhere
+                {locationLabel}
             </div>
             <div className="
             hidden
@@ -41,7 +80,7 @@ const Search = () => {
             flex-1
             text-center
             ">
-                Any Week
+                {durationLabel}
             </div>
             <div className="
             text-md
@@ -53,7 +92,7 @@ const Search = () => {
             items-center
             gap-3
             ">
-                <div className="hidden sm:block">Add Guests</div>
+                <div className="hidden sm:block">{guestLabel}</div>
                 <div className="p-2
                 bg-rose-500
                 rounded-full

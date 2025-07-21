@@ -19,11 +19,11 @@ html,body,:root{
     padding-right: 10px!important;
 } 
 .rdrDays{
-    width:95%;
+    width:100%;
 }
 .rdrMonth{
     padding-right: 15px;
-
+    width: 100%!important;
 }
 .rdrWeekDay{
     padding-right: 15px;
