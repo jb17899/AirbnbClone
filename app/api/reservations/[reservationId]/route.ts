@@ -11,7 +11,7 @@ export async function DELETE(request:Request,{params}:{params:Iparams}){
     if(!currentUser){
         return NextResponse.error();
     }
-    const {reservationId} = await params;
+    const {reservationId} = params;
     if(!reservationId||typeof reservationId!="string"){
         toast.error("Invalid Id");
     }
