@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏠 Airbnb Clone – Full-Stack Rental Platform
 
-## Getting Started
+A full-featured Airbnb clone built with **Next.js**, **Prisma**, and **MongoDB**, designed to allow users to list properties, make reservations, and manage bookings. This project showcases a modern tech stack, clean UI/UX, and robust backend architecture.
 
-First, run the development server:
+## 🚀 Tech Stack
+
+* **Frontend**: Next.js (App Router), React, TypeScript, Tailwind CSS
+* **Backend**: Node.js, Prisma ORM, MongoDB
+* **Authentication**: NextAuth (Google, GitHub providers)
+* **UI Components**: Headless UI, React Icons, Zustand
+* **Cloud & Tools**: Vercel (Hosting), Cloudinary (Image Upload), Axios, ESLint, Prettier
+
+---
+
+## ✨ Features
+
+* ✅ User Authentication (Login / Register with OAuth)
+* 🏨 Host can create property listings with detailed info
+* 🔍 Browse all listings with filters by location, category, date, and more
+* 📅 Make and manage property reservations
+* ❤️ Favorite listings
+* 👤 Profile page to manage your listings and bookings
+* 🌐 Fully responsive and mobile-friendly design
+* 🌥 Image upload with Cloudinary integration
+* 🔐 Secure API routes & protected pages
+* ⚙️ Modular and scalable codebase using clean architecture
+
+---
+
+## 🖼️ Screenshots
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/airbnb-clone.git
+cd airbnb-clone
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Set Up Environment Variables
+
+Create a `.env` file in the root directory and add the following:
+
+```env
+DATABASE_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/airbnb
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
+
+### 4. Setup Prisma & Migrate DB
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### 5. Run the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Folder Structure
 
-## Learn More
+```
+/app              -> Next.js App Router structure
+/components       -> Reusable UI components
+/hooks            -> Custom React hooks
+/libs             -> Prisma client, Cloudinary config, etc.
+/actions          -> Server-side logic (auth, reservation, etc.)
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is ready to deploy on **[Vercel](https://vercel.com/)**. Push your code to GitHub and connect the repo to Vercel.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📌 TODO / Future Enhancements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Add Stripe integration for payments
+* Admin dashboard for hosts
+* Messaging system between host and guest
+* Reviews and ratings system
+
+---
+
+## 🙌 Acknowledgements
+
+Inspired by Airbnb’s design and user flow.
+Built with ❤️ by [Bharat Kumar Sharma](https://www.linkedin.com/in/bharat-kumar-sharma-b23a102aa)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
