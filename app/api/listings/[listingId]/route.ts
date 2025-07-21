@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 interface idProps {
     listingId?: string
 };
-export async function DELETE(request:Request,{params}:{params:idProps}){
+export async function DELETE(request:Request,{params}:{params:Promise<idProps>}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
