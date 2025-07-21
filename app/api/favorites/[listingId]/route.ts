@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-interface IParamsl {
+interface IParams {
   listingId?: string;
 }
 
 export async function POST(
   request: Request,
-  { params }: { params: Promise<IParamsl> }
+  { params }: { params: Promise<IParams> }
 ) {
   const user = await getCurrentUser();
   if (!user) {
