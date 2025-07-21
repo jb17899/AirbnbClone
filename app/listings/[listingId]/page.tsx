@@ -9,10 +9,11 @@ interface Iparams{
   listingId?:string
 };
 const ListingPage = async({params}:{params:Promise<Iparams>}) => {
-const listing = await getListingById(await params);
+  const val = await params;
+const listing = await getListingById(val);
 const currentUser = await getCurrentUser();
 
-  const reservation = await getReservations(params);
+  const reservation = await getReservations(val);
 if(!listing){
   return (
     <ClientOnly>
