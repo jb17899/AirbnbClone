@@ -8,8 +8,8 @@ import ListingClient from "@/app/src/components/ListingClient";
 interface Iparams{
   listingId?:string
 };
-const ListingPage = async({params}:{params:Iparams}) => {
-const listing = await getListingById(params);
+const ListingPage = async({params}:{params:Promise<Iparams>}) => {
+const listing = await getListingById(await params);
 const currentUser = await getCurrentUser();
 
   const reservation = await getReservations(params);
