@@ -11,7 +11,7 @@ interface SearchParamsProps {
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const currentUser = await getCurrentUser();
-  const listings = await getListings(await searchParams);
+  const listings = await getListings(searchParams);
 
   if (!listings || listings.length === 0) {
     return (
