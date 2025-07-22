@@ -1,6 +1,5 @@
 'use client'
-import { User } from "next-auth"
-import { Reservation, Listings } from "../generated/prisma"
+import { Reservation, Listings,User } from "../generated/prisma"
 import { useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import Container from "../src/components/Container"
