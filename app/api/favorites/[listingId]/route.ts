@@ -1,22 +1,26 @@
-import { NextResponse,NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
+// Types from Next.js (optional but helpful)
+import type { NextApiRequest } from "next";
+
+// Declare the route param type
 interface IParams {
   listingId?: string;
 }
 
+// POST /api/favorites/[listingId]
 export async function POST(
   request: NextRequest,
-  context: { params: IParams }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = context.params;
-  console.log(listingId);
+  const { listingId } = params;
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
   }
@@ -31,16 +35,17 @@ export async function POST(
   return NextResponse.json(response);
 }
 
+// DELETE /api/favorites/[listingId]
 export async function DELETE(
   request: NextRequest,
-  context: { params: IParams }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = context.params;
+  const { listingId } = params;
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
   }
