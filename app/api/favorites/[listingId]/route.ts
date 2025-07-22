@@ -8,14 +8,15 @@ interface IParams {
 
 export async function POST(
   request: Request,
-  { params }: { params: IParams }
+  { params }: { params: Promise<IParams> }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = params;
+  const { listingId } = await params;
+  console.log(listingId);
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
   }
