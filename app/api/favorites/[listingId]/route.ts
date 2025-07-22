@@ -8,14 +8,14 @@ interface IParams {
 
 export async function POST(
   request: Request,
-  { params }: { params: Promise<IParams> }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = await params;
+  const { listingId } = params;
   console.log(listingId);
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
@@ -33,14 +33,14 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<IParams> }
+  { params }: { params: IParams }
 ) {
   const user = await getCurrentUser();
   if (!user) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const { listingId } = await params;
+  const { listingId } = params;
   if (!listingId || typeof listingId !== "string") {
     return new NextResponse("Invalid ID", { status: 400 });
   }
