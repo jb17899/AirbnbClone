@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse,NextRequest } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from '@/app/libs/prismadb';
 import toast from "react-hot-toast";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 interface Iparams{
     reservationId?:string
 };
-export async function DELETE(request:Request,context:{params:Iparams}){
+export async function DELETE(request:NextRequest,context:{params:Iparams}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
