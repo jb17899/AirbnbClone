@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse,NextRequest } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
@@ -7,7 +7,7 @@ interface IParams {
 }
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   context: { params: IParams }
 ) {
   const user = await getCurrentUser();
@@ -32,7 +32,7 @@ export async function POST(
 }
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   context: { params: IParams }
 ) {
   const user = await getCurrentUser();
