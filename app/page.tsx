@@ -9,9 +9,9 @@ interface SearchParamsProps {
   searchParams: ListingProps;
 }
 
-export default async function Home({searchParams}:{searchParams:Promise<SearchParamsProps>}) {
+export default async function Home({ searchParams }: SearchParamsProps) {
   const currentUser = await getCurrentUser();
-  const listings = await getListings((await searchParams).searchParams);
+  const listings = await getListings(searchParams);
 
   if (!listings || listings.length === 0) {
     return (
@@ -24,17 +24,19 @@ export default async function Home({searchParams}:{searchParams:Promise<SearchPa
   return (
     <ClientOnly>
       <Container>
-        <div className="
-          pt-24
-          grid
-          grid-cols-1
-          sm:grid-cols-2
-          md:grid-cols-3
-          lg:grid-cols-4
-          xl:grid-cols-5
-          2xl:grid-cols-6
-          gap-8
-        ">
+        <div
+          className="
+            pt-24
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-4
+            xl:grid-cols-5
+            2xl:grid-cols-6
+            gap-8
+          "
+        >
           {listings.map((listing: any) => (
             <ListingCard
               key={listing.id}
