@@ -1,11 +1,11 @@
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 import prisma from '@/app/libs/prismadb';
-import { NextResponse } from 'next/server';
+import { NextResponse,NextRequest } from "next/server";
 
 interface idProps {
     listingId?: string
 };
-export async function DELETE(request:Request,context:{params:idProps}){
+export async function DELETE(request:NextRequest,context:{params:idProps}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
