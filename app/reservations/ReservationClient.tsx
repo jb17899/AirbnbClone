@@ -12,7 +12,7 @@ import ListingCard from "../src/components/ListingCard"
 
 interface resClientProps {
     reservations: Array<Reservation & { listing: Listings }>,
-    currentUser: User|null
+    currentUser?: User|null
 }
 const ReservationClient: React.FC<resClientProps> = ({
     reservations,
