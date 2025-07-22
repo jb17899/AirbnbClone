@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 interface Iparams{
     reservationId?:string
 };
-export async function DELETE(request:Request,{params}:{params:Promise<Iparams>}){
+export async function DELETE(request:Request,{params}:{params:Iparams}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
     }
-    const {reservationId} =await params;
+    const {reservationId} =params;
     if(!reservationId||typeof reservationId!="string"){
         toast.error("Invalid Id");
     }
