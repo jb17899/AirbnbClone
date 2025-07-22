@@ -5,12 +5,12 @@ import { NextResponse } from 'next/server';
 interface idProps {
     listingId?: string
 };
-export async function DELETE(request:Request,{params}:{params:Promise<idProps>}){
+export async function DELETE(request:Request,{params}:{params:idProps}){
     const currentUser = await getCurrentUser();
     if(!currentUser){
         return NextResponse.error();
     }
-    const {listingId} = await params;
+    const {listingId} = params;
     console.log(listingId);
     if(!listingId || typeof listingId !=="string"){
         throw new Error("No listing Id");
